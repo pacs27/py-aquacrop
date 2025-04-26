@@ -4,7 +4,7 @@ These pre-configured entities can be used directly in simulations.
 """
 
 # Import and re-export all default entities
-from aquacrop.entities.default_entities.default_calendars import (
+from aquacrop.templates.default_calendars import (
     early_spring_calendar,
     late_spring_calendar,
     may_21_calendar,
@@ -12,8 +12,8 @@ from aquacrop.entities.default_entities.default_calendars import (
     summer_calendar,
     temperature_dependent,
 )
-from aquacrop.entities.default_entities.default_crops import ottawa_alfalfa
-from aquacrop.entities.default_entities.default_groundwater import (
+from aquacrop.templates.default_crops import ottawa_alfalfa
+from aquacrop.templates.default_groundwater import (
     deep_groundwater,
     dropping_groundwater,
     no_groundwater,
@@ -21,7 +21,7 @@ from aquacrop.entities.default_entities.default_groundwater import (
     saline_groundwater,
     shallow_groundwater,
 )
-from aquacrop.entities.default_entities.default_initial_conditions import (
+from aquacrop.templates.default_initial_conditions import (
     default_initial_conditions,
     dry_initial,
     established_crop_initial,
@@ -30,7 +30,7 @@ from aquacrop.entities.default_entities.default_initial_conditions import (
     saline_soil_initial,
     very_dry_initial,
 )
-from aquacrop.entities.default_entities.default_irrigation import (
+from aquacrop.templates.default_irrigation import (
     basin_auto_schedule,
     drip_auto_schedule,
     drip_fixed_schedule,
@@ -41,7 +41,7 @@ from aquacrop.entities.default_entities.default_irrigation import (
     sprinkler_auto_schedule,
     sprinkler_fixed_schedule,
 )
-from aquacrop.entities.default_entities.default_management import (
+from aquacrop.templates.default_management import (
     high_fertility_stress,
     moderate_fertility_stress,
     mulched_management,
@@ -49,7 +49,7 @@ from aquacrop.entities.default_entities.default_management import (
     ottawa_management,
     weedy_management,
 )
-from aquacrop.entities.default_entities.default_off_season import (
+from aquacrop.templates.default_off_season import (
     default_off_season,
     full_irrigated_off_season,
     mulched_irrigated_off_season,
@@ -58,17 +58,24 @@ from aquacrop.entities.default_entities.default_off_season import (
     pre_irrigated_off_season,
     saline_irrigated_off_season,
 )
-from aquacrop.entities.default_entities.default_parameters import (
+from aquacrop.templates.default_parameters import (
     deep_rooting_parameters,
     high_evaporation_parameters,
     hot_climate_parameters,
     ottawa_parameters,
 )
-from aquacrop.entities.default_entities.default_soils import (
+from aquacrop.templates.default_soils import (
     clay_soil,
     loam_soil,
     ottawa_sandy_loam,
     sandy_soil,
+)
+
+from aquacrop.templates.default_climate import (
+    ottawa_temperatures,
+    ottawa_eto,
+    ottawa_rain,
+    manuloa_co2_records,
 )
 
 # You could also create helpful groupings
@@ -140,4 +147,11 @@ default_parameters = {
     "deep_rooting_parameters": deep_rooting_parameters,
     "high_evaporation_parameters": high_evaporation_parameters,
     "hot_climate_parameters": hot_climate_parameters,
+}
+
+default_climate = {
+    "ottawa_temperatures": ottawa_temperatures,
+    "ottawa_eto": ottawa_eto,
+    "ottawa_rainfall": ottawa_rain,
+    "manuloa_co2_records": manuloa_co2_records,
 }
