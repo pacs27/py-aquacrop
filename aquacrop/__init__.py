@@ -2,9 +2,9 @@
 AquaCrop Python API - A Python wrapper for the AquaCrop crop growth model
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
-# Import high-level models for easy access
+# Import core classes first
 from aquacrop.entities.crop import Crop
 from aquacrop.entities.soil import Soil, SoilLayer
 from aquacrop.entities.climate import Weather
@@ -18,19 +18,22 @@ from aquacrop.entities.initial_conditions import InitialConditions
 from aquacrop.entities.parameter import Parameter
 from aquacrop.aquacrop import AquaCrop
 
+# Import presets module - but DON'T import from it
+import aquacrop.templates
+
 # Explicitly re-export all the classes we want to expose at the top level
 __all__ = [
-    'Crop', 
-    'Soil', 
-    'SoilLayer',
-    'Weather', 
-    'FieldManagement', 
-    'Irrigation',
-    'Calendar',
-    'OffSeason',
-    'Observation',
-    'GroundWater',
-    'InitialConditions',
-    'Parameter',
-    'AquaCrop'
+    "Crop",
+    "Soil",
+    "SoilLayer",
+    "Weather",
+    "FieldManagement",
+    "Irrigation",
+    "Calendar",
+    "OffSeason",
+    "Observation",
+    "GroundWater",
+    "InitialConditions",
+    "Parameter",
+    "AquaCrop",
 ]

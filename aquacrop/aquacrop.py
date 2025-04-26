@@ -33,9 +33,6 @@ class AquaCrop:
     def __init__(
         self,
         simulation_periods: Optional[List[Dict]] = None,
-        start_date: Optional[date] = None,
-        end_date: Optional[date] = None,
-        planting_date: Optional[date] = None,
         crop=None,
         soil=None,
         irrigation=None,
@@ -47,7 +44,6 @@ class AquaCrop:
         ground_water=None,
         initial_conditions=None,
         parameter=None,
-        additional_periods: Optional[List[Dict]] = None,  # For backward compatibility
         working_dir=None,
         need_daily_output=True,
         need_seasonal_output=True,
@@ -56,41 +52,27 @@ class AquaCrop:
     ):
 
         # Handle both new simulation_periods approach and old separate parameters approach
-        if simulation_periods is not None:
-            if not simulation_periods:
-                raise ValueError("At least one simulation period must be provided")
+        if not simulation_periods:
+            raise ValueError("At least one simulation period must be provided")
 
-            # Extract main dates from first period
-            first_period = simulation_periods[0]
-            self.start_date = first_period["start_date"]
-            self.end_date = first_period["end_date"]
-            self.planting_date = first_period["planting_date"]
+        # Store the complete simulation periods
+        self.simulation_periods = simulation_periods
 
-            # Set additional periods
-            self.additional_periods = (
-                simulation_periods[1:] if len(simulation_periods) > 1 else []
-            )
+        # Extract main dates from first period
+        first_period = simulation_periods[0]
 
-            # Set default is_seeding_year if not specified
-            if "is_seeding_year" not in first_period:
-                first_period["is_seeding_year"] = True
+        # Set backward-compatible attributes for the first period
+        self.start_date = first_period["start_date"]
+        self.end_date = first_period["end_date"]
 
-            for period in self.additional_periods:
-                if "is_seeding_year" not in period:
-                    period["is_seeding_year"] = False
-        else:
-            # Traditional initialization with separate parameters
-            if start_date is None or end_date is None or planting_date is None:
-                raise ValueError(
-                    "When not using simulation_periods, you must provide start_date, end_date, and planting_date"
-                )
+        # Handle missing planting_date
+        if "planting_date" not in first_period:
+            first_period["planting_date"] = first_period["start_date"]
+        self.planting_date = first_period["planting_date"]
 
-            self.start_date = start_date
-            self.end_date = end_date
-            self.planting_date = planting_date
-            self.additional_periods = (
-                additional_periods or []
-            )  # Initialize empty list if None
+        # Set default is_seeding_year if not specified for each period
+        if "is_seeding_year" not in first_period:
+            first_period["is_seeding_year"] = True
 
         # Store all other parameters
         self.crop = crop
@@ -160,12 +142,9 @@ class AquaCrop:
             and detailed information about required vs available entries.
         """
         # Calculate total simulation days
-        total_days = (self.end_date - self.start_date).days + 1
-
-        # Include additional periods if present
-        if self.additional_periods:
-            last_period = self.additional_periods[-1]
-            total_days = (last_period["end_date"] - self.start_date).days + 1
+        start_simulation = self.simulation_periods[0]["start_date"]
+        end_simulation = self.simulation_periods[-1]["end_date"]
+        total_days = (end_simulation - start_simulation).days + 1
 
         # Calculate required entries based on record type
         if self.climate is None:
@@ -202,12 +181,8 @@ class AquaCrop:
                 "rainfall": available_rain,
             },
             "simulation_period": {
-                "start_date": self.start_date,
-                "end_date": (
-                    self.end_date
-                    if not self.additional_periods
-                    else self.additional_periods[-1]["end_date"]
-                ),
+                "start_date": start_simulation,
+                "end_date": end_simulation,
                 "total_days": total_days,
             },
             "record_type": {
@@ -347,65 +322,26 @@ class AquaCrop:
         # Generate project file
         from aquacrop.file_generators.LIST.prm_generator import generate_project_file
 
-        # Create first period from initial parameters
-        first_day_sim = calculateAquaCropJulianDay(self.start_date)
-        last_day_sim = calculateAquaCropJulianDay(self.end_date)
-        first_day_crop = calculateAquaCropJulianDay(self.planting_date)
-        last_day_crop = last_day_sim  # Assuming crop ends at end of simulation
+        # Initialize periods list
+        periods = []
 
-        # Initialize periods with the first period
-        periods = [
-            {
-                "year": 1,
-                "first_day_sim": first_day_sim,
-                "last_day_sim": last_day_sim,
-                "first_day_crop": first_day_crop,
-                "last_day_crop": last_day_crop,
-                "is_seeding_year": True,
-                "cli_file": os.path.basename(climate_files["climate"]),
-                "tnx_file": os.path.basename(climate_files["temperature"]),
-                "eto_file": os.path.basename(climate_files["eto"]),
-                "plu_file": os.path.basename(climate_files["rainfall"]),
-                "co2_file": os.path.basename(climate_files["co2"]),
-                "cal_file": (
-                    os.path.basename(calendar_file) if calendar_file else "(None)"
-                ),
-                "cro_file": os.path.basename(crop_file),
-                "irr_file": (
-                    os.path.basename(irrigation_file) if irrigation_file else "(None)"
-                ),
-                "man_file": os.path.basename(management_file),
-                "sol_file": os.path.basename(soil_file),
-                "gwt_file": (
-                    os.path.basename(ground_water_file)
-                    if ground_water_file
-                    else "(None)"
-                ),
-                "sw0_file": (
-                    os.path.basename(initial_conditions_file)
-                    if initial_conditions_file
-                    else "(None)"
-                ),
-                "off_file": (
-                    os.path.basename(off_season_file) if off_season_file else "(None)"
-                ),
-                "obs_file": (
-                    os.path.basename(observation_file) if observation_file else "(None)"
-                ),
-            }
-        ]
+        # Process all simulation periods
+        for i, period_data in enumerate(self.simulation_periods, start=1):
+            # Handle missing planting_date (use start_date if not provided)
+            if "planting_date" not in period_data:
+                planting_date = period_data["start_date"]
+            else:
+                planting_date = period_data["planting_date"]
 
-        # Add additional periods if provided
-        for i, period_data in enumerate(self.additional_periods, start=2):
             period = {
                 "year": i,
                 "first_day_sim": calculateAquaCropJulianDay(period_data["start_date"]),
                 "last_day_sim": calculateAquaCropJulianDay(period_data["end_date"]),
-                "first_day_crop": calculateAquaCropJulianDay(
-                    period_data["planting_date"]
-                ),
+                "first_day_crop": calculateAquaCropJulianDay(planting_date),
                 "last_day_crop": calculateAquaCropJulianDay(period_data["end_date"]),
-                "is_seeding_year": period_data.get("is_seeding_year", False),
+                "is_seeding_year": period_data.get(
+                    "is_seeding_year", True if i == 1 else False
+                ),
                 "cli_file": os.path.basename(climate_files["climate"]),
                 "tnx_file": os.path.basename(climate_files["temperature"]),
                 "eto_file": os.path.basename(climate_files["eto"]),
