@@ -20,9 +20,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-## Note
+## Important Notice Regarding AquaCrop Executable
 
-This license applies to the AquaCrop Python API wrapper only. The AquaCrop model 
-itself is developed by the Food and Agriculture Organization of the United Nations (FAO)
-and may be subject to different licensing terms. Users of this software should ensure 
-they comply with FAO's licensing requirements for the AquaCrop model.
+This MIT license applies only to the PyAquaCrop Python API wrapper code. The underlying
+AquaCrop executable (version 7.2) that this wrapper interfaces with is subject to
+different licensing terms:
+
+AquaCrop Copyright © 2024 KU Leuven for Fortran Version v7.2. Licensed under BSD-3-Clause.
+All rights reserved. Based on previous Pascal work under Copyright © FAO in close
+cooperation with KU Leuven and other universities and research centers.
+
+Users of this software must comply with the BSD-3-Clause license conditions of the AquaCrop
+executable. The full license text for the AquaCrop executable can be found at:
+https://github.com/KUL-RSDA/AquaCrop/blob/main/LICENSE.md
+
+By using this Python API, you agree to comply with both this MIT license (for the Python code)
+and the BSD-3-Clause license (for the AquaCrop executable).
