@@ -13,8 +13,9 @@ tests/tempOttawa/
 NOTES.md
 DOCS_USER.pdf
 test_custom.py
-notebooks/
 model/*
+output_charts/*
+outputs/*
 # Distribution / packaging
 .Python
 build/

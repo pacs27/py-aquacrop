@@ -2,7 +2,7 @@
 AquaCrop Python API - A Python wrapper for the AquaCrop crop growth model
 """
 
-__version__ = "0.1.1"
+__version__ = "0.1.4"
 
 # Import core classes first
 from aquacrop.entities.crop import Crop
