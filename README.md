@@ -10,7 +10,7 @@ A Python wrapper for the FAO AquaCrop crop growth model that enables programmati
 
 AquaCrop is the crop water productivity model developed by the Land and Water Division of FAO. It simulates yield response to water and is particularly suited to address conditions where water is a key limiting factor in crop production.
 
-This Python API provides a high-level interface to the AquaCrop executable, allowing you to:
+This Python API provides a high-level interface to the AquaCrop executable (version 7.2, [release details](https://github.com/KUL-RSDA/AquaCrop/releases/tag/v7.2)), allowing you to:
 
 - Configure and run AquaCrop simulations directly from Python
 - Programmatically generate input files for all model components
@@ -152,16 +152,30 @@ Try PyAquaCrop directly in your browser with our tutorials:
 
 ## Components
 
-The main components of the AquaCrop model that can be configured through this API include:
+PyAquaCrop provides a high-level interface to all major components of the AquaCrop model:
 
-Crop: Growth parameters, water stress responses, and yield formation
-Soil: Soil profile characteristics including horizons, hydraulic properties
-Weather: Temperature, rainfall, ET0, and CO2 concentration
-Irrigation: Irrigation scheduling and water application methods
-Field Management: Soil fertility, mulches, weed management
-Initial Conditions: Starting soil water content and crop development
-Groundwater: Groundwater table characteristics
-Calendar: Planting dates and season timing
+### Core Simulation Components
+
+- **Crop**: Define crop growth parameters, water stress responses, yield formation, and phenology
+- **Soil**: Configure soil profile characteristics including multiple horizons and hydraulic properties
+- **Weather**: Manage temperature, rainfall, ET₀, and CO₂ concentration inputs
+- **Irrigation**: Set up irrigation scheduling, methods, and water application strategies
+- **Field Management**: Control soil fertility, mulches, weed management, and field practices
+
+### Additional Configuration Components
+
+- **Initial Conditions**: Specify starting soil water content and crop development state
+- **Groundwater**: Define groundwater table characteristics and dynamics
+- **Calendar**: Set planting dates, growing periods, and season timing
+- **Off-Season**: Configure conditions between growing periods
+- **Parameter**: Fine-tune model parameters for specific simulation requirements
+
+### Simulation Outputs
+
+- **Daily Results**: Track detailed daily changes in soil water balance, crop development
+- **Seasonal Results**: Obtain season-long performance indicators and yields
+- **Harvest Data**: Access biomass and yield information for multiple cutting events
+- **Evaluation Statistics**: Compare simulation results against field observations
 
 ## License
 
