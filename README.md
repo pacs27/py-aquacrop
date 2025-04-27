@@ -146,9 +146,9 @@ if biomass_col:
 
 Try PyAquaCrop directly in your browser with our tutorials:
 
-1. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/01_Introduction.ipynb">Introduction to PyAquaCrop</a>
-2. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/02_Basic_Simulation.ipynb">Basic Crop Simulation</a>
-3. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/03_Advanced_Analysis.ipynb">Advanced Analysis</a>
+1. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/01_basic_simulation.ipynb">Basic Crop Simulatio</a>
+2. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/02_ottawa_simulation.ipynb">Advanced Crop Simulation</a>
+3. <a href="https://colab.research.google.com/github/pacs27/py-aquacrop/blob/main/docs/notebooks/03_irrigation.ipynb">Irrigation</a>
 
 ## Components
 
