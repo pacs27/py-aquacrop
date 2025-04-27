@@ -14,8 +14,8 @@ NOTES.md
 DOCS_USER.pdf
 test_custom.py
 model/*
-output_charts/*
-outputs/*
+docs/notebooks/output_charts/*
+docs/notebooks/outputs/*
 # Distribution / packaging
 .Python
 build/
