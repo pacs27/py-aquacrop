@@ -1,6 +1,6 @@
 # AquaCrop Python API
 
-[![PyPI version](https://img.shields.io/badge/pypi-v0.1.2-blue.svg)](https://pypi.org/project/pyaquacrop/)
+[![PyPI version](https://img.shields.io/pypi/v/pyaquacrop.svg)](https://pypi.org/project/pyaquacrop/)
 [![Python Versions](https://img.shields.io/badge/python-3.11-blue)](https://pypi.org/project/pyaquacrop/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
